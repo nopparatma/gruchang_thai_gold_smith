@@ -12,7 +12,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
+  cached_network_image: ^3.2.3
+  pull_to_refresh: ^2.0.0
+  loader_overlay: ^2.1.0
+  loading_animation_widget: ^1.2.0+4
+  responsive_framework: ^0.2.0
+  logger: ^1.2.2
+  catcher: ^0.7.0
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +30,24 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+#  fonts:
+#    - family: Prompt
+#      fonts:
+#        - asset: assets/fonts/prompt/Prompt-Regular.ttf
+#        - asset: assets/fonts/prompt/Prompt-Italic.ttf
+#          style: italic
+#        - asset: assets/fonts/prompt/Prompt-Bold.ttf
+#          weight: 500
+#    - family: NovaLineIcon
+#      fonts:
+#        - asset: assets/fonts/nova/NovaLineIcon.ttf
+#    - family: NovaSolidIcon
+#      fonts:
+#        - asset: assets/fonts/nova/NovaSolidIcon.ttf
+#    - family: Roboto
+#      fonts:
+#        - asset: assets/fonts/roboto/Roboto-Regular.ttf
+
+  assets:
+    - assets/images/
+    - assets/langs/

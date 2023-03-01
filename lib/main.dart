@@ -1,61 +1,27 @@
-import 'package:flutter/material.dart';
+import 'package:catcher/core/catcher.dart';
+import 'package:catcher/handlers/console_handler.dart';
+import 'package:catcher/mode/silent_report_mode.dart';
+import 'package:catcher/model/catcher_options.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:logger/logger.dart';
+
+import 'app/app.dart';
+import 'app/app_config.dart';
 
 void main() {
-  runApp(const MyApp());
-}
+  WidgetsFlutterBinding.ensureInitialized();
+  AppConfig.dev();
+  Logger.level = Level.verbose;
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  CatcherOptions catcherOptions = CatcherOptions(
+    SilentReportMode(),
+    [ConsoleHandler()],
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title:
-      // ),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          const SliverAppBar(
-            expandedHeight: 500,
-            backgroundColor: Colors.black,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text('Test'),
-            ),
-            pinned: true,
-          )
-        ],
-        body: Container(height: 1000,),
-      ),
-    );
-  }
+  Catcher(
+    rootWidget: const MainAppLocalization(),
+    debugConfig: catcherOptions,
+    releaseConfig: catcherOptions,
+    profileConfig: catcherOptions,
+  );
 }
