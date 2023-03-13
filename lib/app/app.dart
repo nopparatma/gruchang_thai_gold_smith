@@ -75,47 +75,48 @@ class _MainWebState extends State<MainWeb> {
             const ResponsiveBreakpoint.autoScale(1600, name: "HD"),
             const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
           ],
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black,
         ),
         title: AppConfig.instance.applicationName,
-        // theme: ThemeData(
-        //   primarySwatch: colorPrimaryTheme,
-        //   accentColor: colorAccent,
-        //   fontFamily: appFontFamily,
-        //   backgroundColor: Colors.white,
-        //   textTheme: Theme.of(context).textTheme.apply(
-        //     bodyColor: colorDark,
-        //     displayColor: colorDark,
-        //     fontFamily: appFontFamily,
-        //   ),
-        //   iconTheme: const IconThemeData(color: colorDark),
-        //   tabBarTheme: TabBarTheme(
-        //     labelStyle: TextStyle(
-        //       fontFamily: appFontFamily,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //     unselectedLabelStyle: TextStyle(
-        //       fontFamily: appFontFamily,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        //   elevatedButtonTheme: ElevatedButtonThemeData(
-        //     style: ElevatedButton.styleFrom(
-        //       textStyle: TextStyle(
-        //         fontFamily: appFontFamily,
-        //         fontWeight: FontWeight.normal,
-        //       ),
-        //     ),
-        //   ),
-        //   outlinedButtonTheme: OutlinedButtonThemeData(
-        //     style: OutlinedButton.styleFrom(
-        //       textStyle: TextStyle(
-        //         fontFamily: appFontFamily,
-        //         fontWeight: FontWeight.normal,
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        theme: ThemeData(
+          // primarySwatch: Color.fromRGBO(5, 5, 6, 1),
+          // accentColor: colorAccent,
+          // fontFamily: appFontFamily,
+          // backgroundColor: Colors.black,
+          textTheme: Theme.of(context).textTheme.apply(
+            bodyColor: Colors.white,
+            displayColor: Colors.white,
+            // fontFamily: appFontFamily,
+          ),
+          iconTheme: const IconThemeData(color: Colors.orange),
+          cardColor: const Color.fromRGBO(29,29,41, 1),
+          // tabBarTheme: TabBarTheme(
+          //   labelStyle: TextStyle(
+          //     fontFamily: appFontFamily,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          //   unselectedLabelStyle: TextStyle(
+          //     fontFamily: appFontFamily,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+          // elevatedButtonTheme: ElevatedButtonThemeData(
+          //   style: ElevatedButton.styleFrom(
+          //     textStyle: TextStyle(
+          //       fontFamily: appFontFamily,
+          //       fontWeight: FontWeight.normal,
+          //     ),
+          //   ),
+          // ),
+          // outlinedButtonTheme: OutlinedButtonThemeData(
+          //   style: OutlinedButton.styleFrom(
+          //     textStyle: TextStyle(
+          //       fontFamily: appFontFamily,
+          //       fontWeight: FontWeight.normal,
+          //     ),
+          //   ),
+          // ),
+        ),
         navigatorKey: Catcher.navigatorKey,
         // onGenerateRoute: WebRouter.generateRoute,
         // localizationsDelegates: context.localizationDelegates,
