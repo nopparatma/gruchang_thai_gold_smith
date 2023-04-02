@@ -9,8 +9,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isLandscape = false;
+
   @override
   Widget build(BuildContext context) {
+    isLandscape = (MediaQuery.maybeOf(context)?.size.width ?? 0) > (MediaQuery.maybeOf(context)?.size.height ?? 0);
     return Scaffold(
       body: _buildMain(),
     );
@@ -212,8 +215,8 @@ class _HomeState extends State<Home> {
   }
 
   Widget _imageWidget(String imagePath, int flex) {
-    return Expanded(
-      flex: flex,
+    return SizedBox(
+      width: 400,
       child: Card(
         child: SizedBox(
           height: 400,
@@ -239,6 +242,10 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildPanelProductItem({String imagePath = '', int flexLeft = 5, int flexRight = 7, bool isPadding = true}) {
+    if (!isLandscape) {
+      return Container();
+    }
+
     List<Widget> listWidget = [];
 
     if (flexLeft < flexRight) {
