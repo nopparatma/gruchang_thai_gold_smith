@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -9,6 +10,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+    installerStore: 'Unknown',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
+  }
+
   bool isLandscape = false;
 
   @override
@@ -86,8 +109,8 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              const Expanded(
-                child: Text('กรุช่างทอง', textAlign: TextAlign.center, style: TextStyle(color: Colors.white)),
+              Expanded(
+                child: Text('กรุช่างทอง ${_packageInfo.version} build ${_packageInfo.buildNumber}', textAlign: TextAlign.center, style: TextStyle(color: Colors.white)),
               ),
               Expanded(
                 child: Row(
@@ -156,9 +179,16 @@ class _HomeState extends State<Home> {
           ],
         ),
         const SizedBox(height: 30),
-        _buildPanelProductItem(imagePath: 'assets/images/product1.png', flexLeft: 5, flexRight: 8, isPadding: true),
-        const SizedBox(height: 30),
-        _buildPanelProductItem(imagePath: 'assets/images/product2.png', flexLeft: 8, flexRight: 5, isPadding: true),
+        Image.network(
+          'https://lh5.googleusercontent.com/6JnnBwt6QeujsOpE0yEDxkpHmb44WYa6-hf1pY3uFGOb5mi3dBWBwF0UP8DLl0r6C9Q=w2400',
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(color: Colors.amber);
+          },
+        ),
+        // _buildPanelProductItem(imagePath: 'https://lh5.googleusercontent.com/6JnnBwt6QeujsOpE0yEDxkpHmb44WYa6-hf1pY3uFGOb5mi3dBWBwF0UP8DLl0r6C9Q=w2400', flexLeft: 5, flexRight: 8, isPadding: true),
+        // const SizedBox(height: 30),
+        // _buildPanelProductItem(imagePath: 'https://drive.google.com/uc?export=view&id=1Nx3L1baX4oZ6Wd05kXNLtxQYDo92Z1Hw', flexLeft: 8, flexRight: 5, isPadding: true),
         const SizedBox(height: 30),
         const Text(
           'Our Product',
@@ -221,9 +251,12 @@ class _HomeState extends State<Home> {
         child: SizedBox(
           height: 400,
           child: Positioned.fill(
-            child: Image.asset(
+            child: Image.network(
               imagePath,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(color: Colors.amber);
+              },
             ),
           ),
         ),
