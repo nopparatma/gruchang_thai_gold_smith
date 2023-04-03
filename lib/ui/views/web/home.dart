@@ -50,8 +50,9 @@ class _HomeState extends State<Home> {
         title: Text(
           'กรุช่างทอง',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.xxlarger.copyWith(fontFamily: 'Thaispirit'),
+          style: Theme.of(context).textTheme.xlarger.copyWith(fontFamily: 'Thaispirit'),
         ),
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.search, size: 30))],
       ),
       body: _buildMain(),
     );
