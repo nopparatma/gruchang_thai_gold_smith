@@ -10,6 +10,7 @@ import 'package:logger/logger.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 
+import '../ui/shared/ui_config.dart';
 import 'app_config.dart';
 
 class MainAppLocalization extends StatelessWidget {
@@ -81,12 +82,15 @@ class _MainWebState extends State<MainWeb> {
         theme: ThemeData(
           // primarySwatch: Color.fromRGBO(5, 5, 6, 1),
           // accentColor: colorAccent,
-          // fontFamily: appFontFamily,
+          fontFamily: appFontFamily,
           // backgroundColor: Colors.black,
           textTheme: Theme.of(context).textTheme.apply(
             bodyColor: Colors.white,
             displayColor: Colors.white,
-            // fontFamily: appFontFamily,
+            fontFamily: appFontFamily,
+          ),
+          drawerTheme: const DrawerThemeData(
+            backgroundColor: Color.fromRGBO(5, 5, 6, 1),
           ),
           iconTheme: const IconThemeData(color: Colors.orange),
           cardColor: const Color.fromRGBO(29,29,41, 1),

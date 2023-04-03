@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gruchang_thai_gold_smith/ui/shared/theme.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
+import 'navbar_drawer.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -38,6 +41,18 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     isLandscape = (MediaQuery.maybeOf(context)?.size.width ?? 0) > (MediaQuery.maybeOf(context)?.size.height ?? 0);
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      drawer: const NavbarDrawer(),
+      appBar: AppBar(
+        backgroundColor: const Color(0x44000000),
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          'กรุช่างทอง',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.xxlarger.copyWith(fontFamily: 'Thaispirit'),
+        ),
+      ),
       body: _buildMain(),
     );
   }
@@ -48,9 +63,6 @@ class _HomeState extends State<Home> {
       child: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
-          Container(
-            height: 40,
-          ),
           Stack(
             children: [
               Container(height: 500),
@@ -94,36 +106,13 @@ class _HomeState extends State<Home> {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                child: Row(
-                  children: const [
-                    Text('WOMEN', style: TextStyle(color: Colors.white)),
-                    SizedBox(width: 10),
-                    Text('MEN', style: TextStyle(color: Colors.white)),
-                    SizedBox(width: 10),
-                    Text('KID', style: TextStyle(color: Colors.white)),
-                    SizedBox(width: 10),
-                    Text('ACCESSORIES', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Text('กรุช่างทอง ${_packageInfo.version} build ${_packageInfo.buildNumber}', textAlign: TextAlign.center, style: TextStyle(color: Colors.white)),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Text('WOMEN', style: TextStyle(color: Colors.white)),
-                    SizedBox(width: 10),
-                    Text('MEN', style: TextStyle(color: Colors.white)),
-                    SizedBox(width: 10),
-                    Text('KID', style: TextStyle(color: Colors.white)),
-                    SizedBox(width: 10),
-                    Text('ACCESSORIES', style: TextStyle(color: Colors.white)),
-                  ],
+                child: Text(
+                  'V.${_packageInfo.version}+${_packageInfo.buildNumber}',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.normal,
                 ),
               ),
             ],
@@ -183,7 +172,7 @@ class _HomeState extends State<Home> {
           'https://lh5.googleusercontent.com/6JnnBwt6QeujsOpE0yEDxkpHmb44WYa6-hf1pY3uFGOb5mi3dBWBwF0UP8DLl0r6C9Q=w2400',
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) {
-            return Container(color: Colors.amber);
+            return Container(color: Colors.amber, height: 30);
           },
         ),
         // _buildPanelProductItem(imagePath: 'https://lh5.googleusercontent.com/6JnnBwt6QeujsOpE0yEDxkpHmb44WYa6-hf1pY3uFGOb5mi3dBWBwF0UP8DLl0r6C9Q=w2400', flexLeft: 5, flexRight: 8, isPadding: true),

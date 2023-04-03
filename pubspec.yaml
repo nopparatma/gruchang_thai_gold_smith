@@ -3,7 +3,7 @@ description: A new Flutter application.
 
 publish_to: 'none'
 
-version: 1.0.0+5
+version: 1.0.0+6
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
@@ -32,23 +32,24 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
-#  fonts:
-#    - family: Prompt
-#      fonts:
-#        - asset: assets/fonts/prompt/Prompt-Regular.ttf
-#        - asset: assets/fonts/prompt/Prompt-Italic.ttf
-#          style: italic
-#        - asset: assets/fonts/prompt/Prompt-Bold.ttf
-#          weight: 500
-#    - family: NovaLineIcon
-#      fonts:
-#        - asset: assets/fonts/nova/NovaLineIcon.ttf
-#    - family: NovaSolidIcon
-#      fonts:
-#        - asset: assets/fonts/nova/NovaSolidIcon.ttf
-#    - family: Roboto
-#      fonts:
-#        - asset: assets/fonts/roboto/Roboto-Regular.ttf
+  fonts:
+    - family: Cloud
+      fonts:
+        - asset: assets/fonts/cloud/Cloud-Light.otf
+        - asset: assets/fonts/cloud/Cloud-Bold.otf
+          weight: 500
+    - family: Khanok
+      fonts:
+        - asset: assets/fonts/khanok/SOV_JD_KraNok.ttf
+    - family: Chofa
+      fonts:
+        - asset: assets/fonts/chofa/KRRChofaDemo-Demo.otf
+    - family: Sathaporn
+      fonts:
+        - asset: assets/fonts/sathaporn/KJR_SATHAPORN_TODLONG.ttf
+    - family: Thaispirit
+      fonts:
+        - asset: assets/fonts/thaispirit/KRR-THAISPIRIT.ttf
 
   assets:
     - assets/images/
