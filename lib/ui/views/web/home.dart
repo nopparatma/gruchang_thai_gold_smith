@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gruchang_thai_gold_smith/ui/shared/theme.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -52,7 +55,12 @@ class _HomeState extends State<Home> {
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.xlarger.copyWith(fontFamily: 'Thaispirit'),
         ),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.search, size: 30))],
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(onPressed: () {}, icon: const Icon(Icons.search, size: 30)),
+          )
+        ],
       ),
       body: _buildMain(),
     );
@@ -124,6 +132,31 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildContent() {
+    List<Widget> listProducts = [];
+
+    // https://drive.google.com/file/d/1CAYCNaYebn5mTS9MC_NQjAq9nB32ldhH/view?usp=share_link
+    // https://drive.google.com/uc?export=view&id=1CAYCNaYebn5mTS9MC_NQjAq9nB32ldhH
+    // 'https://lh5.googleusercontent.com/6JnnBwt6QeujsOpE0yEDxkpHmb44WYa6-hf1pY3uFGOb5mi3dBWBwF0UP8DLl0r6C9Q=w2400'
+
+    for (int i = 0; i < 6; i++) {
+      listProducts.add(
+        StaggeredGridTile.count(
+          crossAxisCellCount: 2,
+          mainAxisCellCount: 2,
+          child: Image.network(
+            'https://drive.google.com/uc?export=view&id=1CAYCNaYebn5mTS9MC_NQjAq9nB32ldhH',
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Image.asset(
+                'assets/images/logo_gruchang.png',
+                fit: BoxFit.cover,
+              );
+            },
+          ),
+        ),
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -134,6 +167,12 @@ class _HomeState extends State<Home> {
           overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(width: 100, child: Divider(color: Colors.orange)),
+        StaggeredGrid.count(
+          crossAxisCount: 4,
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
+          children: listProducts,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -176,9 +215,6 @@ class _HomeState extends State<Home> {
             return Container(color: Colors.amber, height: 30);
           },
         ),
-        // _buildPanelProductItem(imagePath: 'https://lh5.googleusercontent.com/6JnnBwt6QeujsOpE0yEDxkpHmb44WYa6-hf1pY3uFGOb5mi3dBWBwF0UP8DLl0r6C9Q=w2400', flexLeft: 5, flexRight: 8, isPadding: true),
-        // const SizedBox(height: 30),
-        // _buildPanelProductItem(imagePath: 'https://drive.google.com/uc?export=view&id=1Nx3L1baX4oZ6Wd05kXNLtxQYDo92Z1Hw', flexLeft: 8, flexRight: 5, isPadding: true),
         const SizedBox(height: 30),
         const Text(
           'Our Product',
