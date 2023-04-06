@@ -12,14 +12,14 @@ import 'app/app_config.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyBoYz6JogeCNBJ6w_FPDhKy5admOUjuIt4",
-      appId: "1:497275743777:web:83176a3cc3054e5a143d60",
-      messagingSenderId: "497275743777",
-      projectId: "gruchangthai",
-    ),
-  );
+  // await Firebase.initializeApp(
+  //   options: const FirebaseOptions(
+  //     apiKey: "AIzaSyBoYz6JogeCNBJ6w_FPDhKy5admOUjuIt4",
+  //     appId: "1:497275743777:web:83176a3cc3054e5a143d60",
+  //     messagingSenderId: "497275743777",
+  //     projectId: "gruchangthai",
+  //   ),
+  // );
 
   AppConfig.dev();
   Logger.level = Level.verbose;

@@ -3,9 +3,17 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gruchang_thai_gold_smith/ui/shared/theme.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'navbar_drawer.dart';
+
+class Product {
+  String imgUrl;
+  String name;
+
+  Product({required this.imgUrl, required this.name});
+}
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -53,7 +61,7 @@ class _HomeState extends State<Home> {
         title: Text(
           'กรุช่างทอง',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.xlarger.copyWith(fontFamily: 'Thaispirit'),
+          style: Theme.of(context).textTheme.larger.copyWith(fontFamily: 'Thaispirit'),
         ),
         actions: [
           Padding(
@@ -132,30 +140,18 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildContent() {
-    List<Widget> listProducts = [];
+    List<Product> listImgs = [
+      Product(name: 'กำไล ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=11eEV4eJyhPxS044VO72m5QoVHT5d0rR6'),
+      Product(name: 'สร้อยคอ ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1sLgylZNJSV2fYHbHxNIIO1TT97HuuRkx'),
+      Product(name: 'แหวน ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1BkcEh_XpQ72YFwvFzd08jDDclHmKmaaL'),
+      Product(name: 'ปิ่น ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1nRwSu91BgYRcPuEiOIBz7zQF_tKIh5H3'),
+      Product(name: 'ต่างหู ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1hk2ffeVZcJ-u8VSdYfPs8g2tPfeX56Bo'),
+      Product(name: 'ผอบ ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1tMqNUdkKOXxbjp3J16oTgO7FPNXvK7Xw'),
+    ];
 
     // https://drive.google.com/file/d/1CAYCNaYebn5mTS9MC_NQjAq9nB32ldhH/view?usp=share_link
     // https://drive.google.com/uc?export=view&id=1CAYCNaYebn5mTS9MC_NQjAq9nB32ldhH
     // 'https://lh5.googleusercontent.com/6JnnBwt6QeujsOpE0yEDxkpHmb44WYa6-hf1pY3uFGOb5mi3dBWBwF0UP8DLl0r6C9Q=w2400'
-
-    for (int i = 0; i < 6; i++) {
-      listProducts.add(
-        StaggeredGridTile.count(
-          crossAxisCellCount: 2,
-          mainAxisCellCount: 2,
-          child: Image.network(
-            'https://drive.google.com/uc?export=view&id=1CAYCNaYebn5mTS9MC_NQjAq9nB32ldhH',
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Image.asset(
-                'assets/images/logo_gruchang.png',
-                fit: BoxFit.cover,
-              );
-            },
-          ),
-        ),
-      );
-    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -167,11 +163,14 @@ class _HomeState extends State<Home> {
           overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(width: 100, child: Divider(color: Colors.orange)),
-        StaggeredGrid.count(
-          crossAxisCount: 4,
-          mainAxisSpacing: 4,
-          crossAxisSpacing: 4,
-          children: listProducts,
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: StaggeredGrid.count(
+            crossAxisCount: 4,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            children: [...listImgs.map((e) => _buildImgItem(e))],
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -267,6 +266,52 @@ class _HomeState extends State<Home> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildImgItem(Product product) {
+    return StaggeredGridTile.count(
+      crossAxisCellCount: 2,
+      mainAxisCellCount: 2,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.network(
+              product.imgUrl,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                return Center(
+                  child: LoadingAnimationWidget.discreteCircle(
+                    color: Colors.deepPurple,
+                    size: 100,
+                  ),
+                );
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  'assets/images/logo_gruchang.png',
+                  fit: BoxFit.cover,
+                );
+              },
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                color: const Color(0x44000000),
+                height: 60,
+                child: Center(
+                  child: Text(
+                    product.name,
+                    style: Theme.of(context).textTheme.large,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
