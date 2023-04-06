@@ -19,7 +19,7 @@ const RESOURCES = {
 "assets/assets/images/wat-arun-sunset.jpg": "33a1604911dbb52225f9e99e28f36cfd",
 "assets/FontManifest.json": "11b9e9bea337b5545f1e05e2d71f6bb7",
 "assets/fonts/MaterialIcons-Regular.otf": "e7069dfd19b331be16bed984668fe080",
-"assets/NOTICES": "21babce21e304b5379ba2bda6d7c63f2",
+"assets/NOTICES": "20b61222f071250be058822f63da7820",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/packages/fluttertoast/assets/toastify.css": "a85675050054f179444bc5ad70ffc635",
 "assets/packages/fluttertoast/assets/toastify.js": "e7006a0a033d834ef9414d48db3be6fc",
@@ -33,11 +33,11 @@ const RESOURCES = {
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "a62bf854705fbf51566224828f95cda7",
-"/": "a62bf854705fbf51566224828f95cda7",
-"main.dart.js": "fbc1be1c788e0b697a0a8337d6d62d38",
+"index.html": "f1f335b4ed19b4d186ffa01b252c5a69",
+"/": "f1f335b4ed19b4d186ffa01b252c5a69",
+"main.dart.js": "ab0e997496a036e5450c721ff56ac1c6",
 "manifest.json": "1c51af6de1248022f45cf9b1c9305e80",
-"version.json": "bb2af5c47d3471277ffb369e806e5829"
+"version.json": "6cde923e5fb914e7a25691d9a0cdc936"
 };
 
 // The application shell files that are downloaded before a service worker can
