@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gruchang_thai_gold_smith/ui/shared/theme.dart';
@@ -141,17 +139,13 @@ class _HomeState extends State<Home> {
 
   Widget _buildContent() {
     List<Product> listImgs = [
-      Product(name: 'กำไล ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=11eEV4eJyhPxS044VO72m5QoVHT5d0rR6'),
+      Product(name: 'กำไล ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://firebasestorage.googleapis.com/v0/b/gruchangthai.appspot.com/o/p1.PNG?alt=media&token=3067962f-0e23-4abf-8cc7-458e52d27dfa'),
       Product(name: 'สร้อยคอ ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1sLgylZNJSV2fYHbHxNIIO1TT97HuuRkx'),
       Product(name: 'แหวน ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1BkcEh_XpQ72YFwvFzd08jDDclHmKmaaL'),
       Product(name: 'ปิ่น ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1nRwSu91BgYRcPuEiOIBz7zQF_tKIh5H3'),
       Product(name: 'ต่างหู ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1hk2ffeVZcJ-u8VSdYfPs8g2tPfeX56Bo'),
       Product(name: 'ผอบ ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1tMqNUdkKOXxbjp3J16oTgO7FPNXvK7Xw'),
     ];
-
-    // https://drive.google.com/file/d/1CAYCNaYebn5mTS9MC_NQjAq9nB32ldhH/view?usp=share_link
-    // https://drive.google.com/uc?export=view&id=1CAYCNaYebn5mTS9MC_NQjAq9nB32ldhH
-    // 'https://lh5.googleusercontent.com/6JnnBwt6QeujsOpE0yEDxkpHmb44WYa6-hf1pY3uFGOb5mi3dBWBwF0UP8DLl0r6C9Q=w2400'
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -279,13 +273,10 @@ class _HomeState extends State<Home> {
             child: Image.network(
               product.imgUrl,
               fit: BoxFit.cover,
-              loadingBuilder: (context, child, loadingProgress) {
-                return Center(
-                  child: LoadingAnimationWidget.discreteCircle(
-                    color: Colors.deepPurple,
-                    size: 100,
-                  ),
-                );
+              headers: const {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
               },
               errorBuilder: (context, error, stackTrace) {
                 return Image.asset(
@@ -294,12 +285,23 @@ class _HomeState extends State<Home> {
                 );
               },
             ),
+            // child: FadeInImage.assetNetwork(
+            //   fit: BoxFit.cover,
+            //   image: product.imgUrl,
+            //   placeholder: 'assets/images/logo_gruchang.png',
+            //   imageErrorBuilder: (context, error, stackTrace) {
+            //     return Image.asset(
+            //       'assets/images/logo_gruchang.png',
+            //       fit: BoxFit.cover,
+            //     );
+            //   },
+            // ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                color: const Color(0x44000000),
+                color: const Color(0x66000000),
                 height: 60,
                 child: Center(
                   child: Text(
@@ -312,58 +314,6 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _imageWidget(String imagePath, int flex) {
-    return SizedBox(
-      width: 400,
-      child: Card(
-        child: SizedBox(
-          height: 400,
-          child: Positioned.fill(
-            child: Image.network(
-              imagePath,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(color: Colors.amber);
-              },
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _textWidget(int flex) {
-    return Expanded(
-      flex: flex,
-      child: Container(
-        height: 400,
-        color: const Color.fromRGBO(17, 17, 24, 1),
-      ),
-    );
-  }
-
-  Widget _buildPanelProductItem({String imagePath = '', int flexLeft = 5, int flexRight = 7, bool isPadding = true}) {
-    if (!isLandscape) {
-      return Container();
-    }
-
-    List<Widget> listWidget = [];
-
-    if (flexLeft < flexRight) {
-      listWidget.addAll([_imageWidget(imagePath, flexLeft), const SizedBox(width: 20), _textWidget(flexRight)]);
-    } else {
-      listWidget.addAll([_textWidget(flexLeft), const SizedBox(width: 20), _imageWidget(imagePath, flexRight)]);
-    }
-
-    return Row(
-      children: [
-        if (isPadding) Expanded(flex: 1, child: Container()),
-        for (Widget item in listWidget) item,
-        if (isPadding) Expanded(flex: 1, child: Container()),
-      ],
     );
   }
 
