@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Colors.black26,
+                        Colors.black12,
                         Color.fromRGBO(5, 5, 6, 1),
                       ],
                       begin: Alignment.topCenter,
@@ -97,6 +97,14 @@ class _HomeState extends State<Home> {
                 ),
               ),
               _buildHeaderMenu(),
+              Positioned.fill(
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/logo_gruchang_no_bg.png',
+                    width: 400,
+                  ),
+                ),
+              ),
             ],
           ),
           _buildContent(),
