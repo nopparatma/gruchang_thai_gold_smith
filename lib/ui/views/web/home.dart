@@ -139,7 +139,7 @@ class _HomeState extends State<Home> {
 
   Widget _buildContent() {
     List<Product> listImgs = [
-      Product(name: 'กำไล ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://firebasestorage.googleapis.com/v0/b/gruchangthai.appspot.com/o/p1.PNG?alt=media&token=3067962f-0e23-4abf-8cc7-458e52d27dfa'),
+      Product(name: 'กำไล ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=11eEV4eJyhPxS044VO72m5QoVHT5d0rR6'),
       Product(name: 'สร้อยคอ ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1sLgylZNJSV2fYHbHxNIIO1TT97HuuRkx'),
       Product(name: 'แหวน ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1BkcEh_XpQ72YFwvFzd08jDDclHmKmaaL'),
       Product(name: 'ปิ่น ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1nRwSu91BgYRcPuEiOIBz7zQF_tKIh5H3'),
@@ -273,11 +273,11 @@ class _HomeState extends State<Home> {
             child: Image.network(
               product.imgUrl,
               fit: BoxFit.cover,
-              headers: const {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
-              },
+              // headers: const {
+              //   "Access-Control-Allow-Origin": "*",
+              //   "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+              //   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
+              // },
               errorBuilder: (context, error, stackTrace) {
                 return Image.asset(
                   'assets/images/logo_gruchang.png',
