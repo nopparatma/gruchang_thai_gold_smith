@@ -12,14 +12,18 @@ import 'app/app_config.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // await Firebase.initializeApp(
-  //   options: const FirebaseOptions(
-  //     apiKey: "AIzaSyBoYz6JogeCNBJ6w_FPDhKy5admOUjuIt4",
-  //     appId: "1:497275743777:web:83176a3cc3054e5a143d60",
-  //     messagingSenderId: "497275743777",
-  //     projectId: "gruchangthai",
-  //   ),
-  // );
+  await Firebase.initializeApp(
+    name: 'gruchang_thai_gold_smith',
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyBohdCY8al1wtU6-0fKmJ-KjNxZAMPxApw",
+      authDomain: "gruchangthai2.firebaseapp.com",
+      projectId: "gruchangthai2",
+      storageBucket: "gruchangthai2.appspot.com",
+      messagingSenderId: "292247113542",
+      appId: "1:292247113542:web:9bb003262312d73c769f47",
+      measurementId: "G-KRG3ZNR6QQ",
+    ),
+  );
 
   AppConfig.dev();
   Logger.level = Level.verbose;
