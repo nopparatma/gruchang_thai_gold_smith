@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gruchang_thai_gold_smith/ui/shared/theme.dart';
+import 'package:gruchang_thai_gold_smith/ui/widgets/custom_footer.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import 'navbar_drawer.dart';
+import '../../router.dart';
+import '../../widgets/custom_drawer.dart';
+import '../../widgets/custom_layout.dart';
 
 class Product {
   String imgUrl;
@@ -13,15 +16,15 @@ class Product {
   Product({required this.imgUrl, required this.name});
 }
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _HomeState createState() => _HomeState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeState extends State<Home> {
+class _HomePageState extends State<HomePage> {
   PackageInfo _packageInfo = PackageInfo(
     appName: 'Unknown',
     packageName: 'Unknown',
@@ -49,68 +52,48 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     isLandscape = (MediaQuery.maybeOf(context)?.size.width ?? 0) > (MediaQuery.maybeOf(context)?.size.height ?? 0);
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      drawer: const NavbarDrawer(),
-      appBar: AppBar(
-        backgroundColor: const Color(0x44000000),
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          'กรุช่างทอง',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.larger.copyWith(fontFamily: 'Thaispirit'),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(onPressed: () {}, icon: const Icon(Icons.search, size: 30)),
-          )
-        ],
-      ),
+
+    return CustomLayout(
       body: _buildMain(),
     );
   }
 
   Widget _buildMain() {
-    return Container(
-      color: const Color.fromRGBO(5, 5, 6, 1),
-      child: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: [
-          Stack(
-            children: [
-              Container(height: 500),
-              _buildPicBackground(),
-              Positioned.fill(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.black12,
-                        Color.fromRGBO(5, 5, 6, 1),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      children: [
+        Stack(
+          children: [
+            Container(height: 500),
+            _buildPicBackground(),
+            Positioned.fill(
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black12,
+                      Color.fromRGBO(5, 5, 6, 1),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
                   ),
                 ),
               ),
-              _buildHeaderMenu(),
-              Positioned.fill(
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/logo_gruchang_no_bg.png',
-                    width: 400,
-                  ),
+            ),
+            _buildHeaderMenu(),
+            Positioned.fill(
+              child: Center(
+                child: Image.asset(
+                  'assets/images/logo_gruchang_no_bg.png',
+                  width: 400,
                 ),
               ),
-            ],
-          ),
-          _buildContent(),
-          _buildFooter(),
-        ],
-      ),
+            ),
+          ],
+        ),
+        _buildContent(),
+        const CustomFooter(),
+      ],
     );
   }
 
@@ -275,59 +258,43 @@ class _HomeState extends State<Home> {
     return StaggeredGridTile.count(
       crossAxisCellCount: 2,
       mainAxisCellCount: 2,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.network(
-              product.imgUrl,
-              fit: BoxFit.cover,
-              // headers: const {
-              //   "Access-Control-Allow-Origin": "*",
-              //   "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
-              //   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
-              // },
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset(
-                  'assets/images/logo_gruchang.png',
-                  fit: BoxFit.cover,
-                );
-              },
+      child: InkWell(
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: FadeInImage.assetNetwork(
+                fit: BoxFit.cover,
+                image: product.imgUrl,
+                placeholder: 'assets/images/logo_gruchang_no_bg.png',
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    'assets/images/logo_gruchang_no_bg.png',
+                    fit: BoxFit.cover,
+                  );
+                },
+              ),
             ),
-            // child: FadeInImage.assetNetwork(
-            //   fit: BoxFit.cover,
-            //   image: product.imgUrl,
-            //   placeholder: 'assets/images/logo_gruchang.png',
-            //   imageErrorBuilder: (context, error, stackTrace) {
-            //     return Image.asset(
-            //       'assets/images/logo_gruchang.png',
-            //       fit: BoxFit.cover,
-            //     );
-            //   },
-            // ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                color: const Color(0x66000000),
-                height: 60,
-                child: Center(
-                  child: Text(
-                    product.name,
-                    style: Theme.of(context).textTheme.large,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  color: const Color(0x66000000),
+                  height: 60,
+                  child: Center(
+                    child: Text(
+                      product.name,
+                      style: Theme.of(context).textTheme.large,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, RoutePaths.catalogPage);
+        },
       ),
-    );
-  }
-
-  Widget _buildFooter() {
-    return const SizedBox(
-      height: 100,
     );
   }
 }

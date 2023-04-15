@@ -10,7 +10,9 @@ import 'package:logger/logger.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 
+import '../ui/router.dart';
 import '../ui/shared/ui_config.dart';
+import '../ui/views/web/catalog.dart';
 import 'app_config.dart';
 
 class MainAppLocalization extends StatelessWidget {
@@ -85,49 +87,26 @@ class _MainWebState extends State<MainWeb> {
           fontFamily: appFontFamily,
           // backgroundColor: Colors.black,
           textTheme: Theme.of(context).textTheme.apply(
-            bodyColor: Colors.white,
-            displayColor: Colors.white,
-            fontFamily: appFontFamily,
-          ),
+                bodyColor: Colors.white,
+                displayColor: Colors.white,
+                fontFamily: appFontFamily,
+              ),
           drawerTheme: const DrawerThemeData(
             backgroundColor: Color.fromRGBO(5, 5, 6, 1),
           ),
           iconTheme: const IconThemeData(color: Colors.orange),
-          cardColor: const Color.fromRGBO(29,29,41, 1),
-          // tabBarTheme: TabBarTheme(
-          //   labelStyle: TextStyle(
-          //     fontFamily: appFontFamily,
-          //     fontWeight: FontWeight.bold,
-          //   ),
-          //   unselectedLabelStyle: TextStyle(
-          //     fontFamily: appFontFamily,
-          //     fontWeight: FontWeight.bold,
-          //   ),
-          // ),
-          // elevatedButtonTheme: ElevatedButtonThemeData(
-          //   style: ElevatedButton.styleFrom(
-          //     textStyle: TextStyle(
-          //       fontFamily: appFontFamily,
-          //       fontWeight: FontWeight.normal,
-          //     ),
-          //   ),
-          // ),
-          // outlinedButtonTheme: OutlinedButtonThemeData(
-          //   style: OutlinedButton.styleFrom(
-          //     textStyle: TextStyle(
-          //       fontFamily: appFontFamily,
-          //       fontWeight: FontWeight.normal,
-          //     ),
-          //   ),
-          // ),
+          cardColor: const Color.fromRGBO(29, 29, 41, 1),
+          appBarTheme: const AppBarTheme(
+            toolbarHeight: 55,
+          ),
         ),
         navigatorKey: Catcher.navigatorKey,
-        // onGenerateRoute: WebRouter.generateRoute,
+        onGenerateRoute: WebRouter.generateRoute,
         // localizationsDelegates: context.localizationDelegates,
         // supportedLocales: context.supportedLocales,
         // locale: context.locale,
         // navigatorObservers: [middleware],
-        home: const Home(),
+        home: const HomePage(),
       ),
     );
   }
