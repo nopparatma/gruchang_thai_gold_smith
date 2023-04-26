@@ -58,4 +58,4 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/langs/
+#    - assets/langs/

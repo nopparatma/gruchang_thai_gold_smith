@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:catcher/core/catcher.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gruchang_thai_gold_smith/ui/views/web/about_us.dart';
+import 'package:gruchang_thai_gold_smith/ui/views/web/contact_us.dart';
 import 'package:gruchang_thai_gold_smith/ui/views/web/home.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';

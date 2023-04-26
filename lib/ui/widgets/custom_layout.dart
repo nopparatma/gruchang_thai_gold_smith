@@ -25,7 +25,7 @@ class _CustomLayoutState extends State<CustomLayout> {
       extendBodyBehindAppBar: true,
       drawer: widget.isShowBack ? null : const CustomDrawer(),
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color.fromRGBO(5, 5, 6, 1),
         elevation: 0,
         centerTitle: true,
         leading: widget.isShowBack
@@ -47,6 +47,7 @@ class _CustomLayoutState extends State<CustomLayout> {
       ),
       body: SafeArea(
         child: Container(
+          // color: const Color(0xFF290001),
           color: const Color.fromRGBO(5, 5, 6, 1),
           child: Column(
             children: [

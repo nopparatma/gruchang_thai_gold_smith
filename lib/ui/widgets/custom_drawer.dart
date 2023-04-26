@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gruchang_thai_gold_smith/ui/shared/theme.dart';
 
+import '../router.dart';
+
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
 
@@ -48,8 +50,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 _buildMenuItem('งานเครื่องถมเงิน เครื่องถมทอง', Icons.ac_unit),
                 _buildMenuItem('งานเครื่องประดับอื่นๆ', Icons.ac_unit),
                 const Divider(color: Colors.orange, thickness: 2, indent: 10, endIndent: 10),
-                _buildMenuItem('เกี่ยวกับเรา', Icons.ac_unit),
-                _buildMenuItem('ติดต่อเรา', Icons.ac_unit),
+                _buildMenuItem('เกี่ยวกับเรา', Icons.ac_unit, page: RoutePaths.aboutUsPage),
+                _buildMenuItem('ติดต่อเรา', Icons.ac_unit, page: RoutePaths.contactUsPage),
               ],
             ),
           ),
@@ -58,19 +60,56 @@ class _CustomDrawerState extends State<CustomDrawer> {
     );
   }
 
-  Widget _buildMenuItem(String text, IconData icon) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          Icon(icon, size: 30),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(text, textAlign: TextAlign.left, style: Theme.of(context).textTheme.normal),
-          ),
-          const SizedBox(width: 10),
-          const Icon(Icons.navigate_next, size: 30),
-        ],
+  Widget _buildMenuItem(String text, IconData icon, {String? page}) {
+    return InkWell(
+      onTap: page != null ? () => Navigator.pushNamed(context, page) : () {},
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Icon(icon, size: 30),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(text, textAlign: TextAlign.left, style: Theme.of(context).textTheme.normal),
+            ),
+            const SizedBox(width: 10),
+            const Icon(Icons.navigate_next, size: 30),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MenuItem extends StatefulWidget {
+  final String text;
+  final IconData icon;
+  final Function function;
+
+  const MenuItem({super.key, required this.text, required this.icon, required this.function});
+
+  @override
+  _MenuItemState createState() => _MenuItemState();
+}
+
+class _MenuItemState extends State<MenuItem> {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => widget.function(),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Icon(widget.icon, size: 30),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(widget.text, textAlign: TextAlign.left, style: Theme.of(context).textTheme.normal),
+            ),
+            const SizedBox(width: 10),
+            const Icon(Icons.navigate_next, size: 30),
+          ],
+        ),
       ),
     );
   }
