@@ -37,6 +37,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             child: ListView(
               physics: const BouncingScrollPhysics(),
               children: [
+                _buildMenuItem('หน้าหลัก', Icons.ac_unit, page: RoutePaths.homePage),
                 _buildMenuItem('สร้อยคอ', Icons.ac_unit),
                 _buildMenuItem('ข้อมือ', Icons.ac_unit),
                 _buildMenuItem('กรอบพระ', Icons.ac_unit),
@@ -62,7 +63,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   Widget _buildMenuItem(String text, IconData icon, {String? page}) {
     return InkWell(
-      onTap: page != null ? () => Navigator.pushNamed(context, page) : () {},
+      onTap: page != null ? () => Navigator.pushReplacementNamed(context, page) : () {},
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
