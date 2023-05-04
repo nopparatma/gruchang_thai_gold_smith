@@ -1,20 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:gruchang_thai_gold_smith/core/bloc/product/product_bloc.dart';
+import 'package:gruchang_thai_gold_smith/core/bloc/product/product_event.dart';
 import 'package:gruchang_thai_gold_smith/ui/shared/theme.dart';
 import 'package:gruchang_thai_gold_smith/ui/widgets/custom_footer.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../../../core/bloc/product/product_state.dart';
+import '../../../core/sevices/model/product.dart';
 import '../../router.dart';
 import '../../widgets/custom_drawer.dart';
 import '../../widgets/custom_layout.dart';
-
-class Product {
-  String imgUrl;
-  String name;
-
-  Product({required this.imgUrl, required this.name});
-}
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,10 +33,19 @@ class _HomePageState extends State<HomePage> {
     installerStore: 'Unknown',
   );
 
+  late ProductBloc _productBloc;
+
   @override
   void initState() {
     super.initState();
     _initPackageInfo();
+
+    context.read<ProductBloc>().add(GetProductEvent());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<void> _initPackageInfo() async {
@@ -91,7 +99,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        _buildContent(),
+        _buildContentFirst(),
         const CustomFooter(),
       ],
     );
@@ -128,15 +136,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildContent() {
-    List<Product> listImgs = [
-      Product(name: 'กำไล ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=11eEV4eJyhPxS044VO72m5QoVHT5d0rR6'),
-      Product(name: 'สร้อยคอ ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1sLgylZNJSV2fYHbHxNIIO1TT97HuuRkx'),
-      Product(name: 'แหวน ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1BkcEh_XpQ72YFwvFzd08jDDclHmKmaaL'),
-      Product(name: 'ปิ่น ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1nRwSu91BgYRcPuEiOIBz7zQF_tKIh5H3'),
-      Product(name: 'ต่างหู ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1hk2ffeVZcJ-u8VSdYfPs8g2tPfeX56Bo'),
-      Product(name: 'ผอบ ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1tMqNUdkKOXxbjp3J16oTgO7FPNXvK7Xw'),
-    ];
+  Widget _buildContentFirst() {
+    // List<Product> listImgs = [
+    //   Product(nameTH: 'กำไล ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=11eEV4eJyhPxS044VO72m5QoVHT5d0rR6'),
+    //   Product(nameTH: 'สร้อยคอ ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1sLgylZNJSV2fYHbHxNIIO1TT97HuuRkx'),
+    //   Product(nameTH: 'แหวน ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1BkcEh_XpQ72YFwvFzd08jDDclHmKmaaL'),
+    //   Product(nameTH: 'ปิ่น ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1nRwSu91BgYRcPuEiOIBz7zQF_tKIh5H3'),
+    //   Product(nameTH: 'ต่างหู ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1hk2ffeVZcJ-u8VSdYfPs8g2tPfeX56Bo'),
+    //   Product(nameTH: 'ผอบ ทองโบราณ ทองเพชรบุรี', imgUrl: 'https://drive.google.com/uc?export=view&id=1tMqNUdkKOXxbjp3J16oTgO7FPNXvK7Xw'),
+    // ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -149,124 +157,151 @@ class _HomePageState extends State<HomePage> {
         ),
         const SizedBox(width: 100, child: Divider(color: Colors.orange)),
         Padding(
-          padding: const EdgeInsets.all(20),
-          child: StaggeredGrid.count(
-            crossAxisCount: 4,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            children: [...listImgs.map((e) => _buildImgItem(e))],
+          padding: const EdgeInsets.all(30),
+          child: BlocBuilder<ProductBloc, ProductState>(
+            builder: (context, state) {
+              if (state is LoadingProductState) {
+                return buildOverlayLoader();
+              }
+
+              if (state is SuccessLoadProductState) {
+                return StaggeredGrid.count(
+                  crossAxisCount: isLandscape ? 3 : 4,
+                  mainAxisSpacing: 30,
+                  crossAxisSpacing: 30,
+                  children: [...state.products.map((e) => _buildImgItem(e))],
+                );
+              }
+
+              return Container();
+            },
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: 150,
-                child: Center(
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 4,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(Icons.ac_unit),
-                            Text('etests'),
-                            Text(
-                              'กระบวนการผลิตเชิงช่างทองโบราณ\nมุ่งเน้นคุณค่าแห่งความคิด\nประกอบเข้ากับฝีมืออันบริสุทธิ์',
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 30),
-        Image.network(
-          'https://lh5.googleusercontent.com/6JnnBwt6QeujsOpE0yEDxkpHmb44WYa6-hf1pY3uFGOb5mi3dBWBwF0UP8DLl0r6C9Q=w2400',
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return Container(color: Colors.amber, height: 30);
-          },
-        ),
-        const SizedBox(height: 30),
-        const Text(
-          'Our Product',
-          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-        ),
-        const SizedBox(width: 100, child: Divider(color: Colors.orange)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: 200,
-                child: Center(
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 4,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.ac_unit, size: 30),
-                                Text(
-                                  'สินค้า ${index + 1}',
-                                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                                ),
-                                const Text(
-                                  'กระบวนการผลิตเชิงช่างทองโบราณ\nมุ่งเน้นคุณค่าแห่งความคิด\nประกอบเข้ากับฝีมืออันบริสุทธิ์',
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Expanded(
+        //       child: SizedBox(
+        //         height: 150,
+        //         child: Center(
+        //           child: ListView.builder(
+        //             scrollDirection: Axis.horizontal,
+        //             itemCount: 4,
+        //             shrinkWrap: true,
+        //             itemBuilder: (context, index) {
+        //               return Padding(
+        //                 padding: const EdgeInsets.symmetric(horizontal: 20),
+        //                 child: Column(
+        //                   mainAxisAlignment: MainAxisAlignment.center,
+        //                   crossAxisAlignment: CrossAxisAlignment.center,
+        //                   children: const [
+        //                     Icon(Icons.ac_unit),
+        //                     Text('etests'),
+        //                     Text(
+        //                       'กระบวนการผลิตเชิงช่างทองโบราณ\nมุ่งเน้นคุณค่าแห่งความคิด\nประกอบเข้ากับฝีมืออันบริสุทธิ์',
+        //                       textAlign: TextAlign.center,
+        //                     ),
+        //                   ],
+        //                 ),
+        //               );
+        //             },
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // const SizedBox(height: 30),
+        // Image.network(
+        //   'https://lh5.googleusercontent.com/6JnnBwt6QeujsOpE0yEDxkpHmb44WYa6-hf1pY3uFGOb5mi3dBWBwF0UP8DLl0r6C9Q=w2400',
+        //   fit: BoxFit.cover,
+        //   errorBuilder: (context, error, stackTrace) {
+        //     return Container(color: Colors.amber, height: 30);
+        //   },
+        // ),
+        // const SizedBox(height: 30),
+        // const Text(
+        //   'Our Product',
+        //   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+        //   textAlign: TextAlign.center,
+        //   overflow: TextOverflow.ellipsis,
+        // ),
+        // const SizedBox(width: 100, child: Divider(color: Colors.orange)),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Expanded(
+        //       child: SizedBox(
+        //         height: 200,
+        //         child: Center(
+        //           child: ListView.builder(
+        //             scrollDirection: Axis.horizontal,
+        //             itemCount: 4,
+        //             shrinkWrap: true,
+        //             itemBuilder: (context, index) {
+        //               return Padding(
+        //                 padding: const EdgeInsets.symmetric(horizontal: 10),
+        //                 child: Card(
+        //                   child: Padding(
+        //                     padding: const EdgeInsets.all(8.0),
+        //                     child: Column(
+        //                       mainAxisAlignment: MainAxisAlignment.center,
+        //                       crossAxisAlignment: CrossAxisAlignment.center,
+        //                       children: [
+        //                         const Icon(Icons.ac_unit, size: 30),
+        //                         Text(
+        //                           'สินค้า ${index + 1}',
+        //                           style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        //                         ),
+        //                         const Text(
+        //                           'กระบวนการผลิตเชิงช่างทองโบราณ\nมุ่งเน้นคุณค่าแห่งความคิด\nประกอบเข้ากับฝีมืออันบริสุทธิ์',
+        //                           textAlign: TextAlign.center,
+        //                           overflow: TextOverflow.ellipsis,
+        //                         ),
+        //                       ],
+        //                     ),
+        //                   ),
+        //                 ),
+        //               );
+        //             },
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ],
+    );
+  }
+
+  Widget buildOverlayLoader() {
+    return Center(
+      child: LoadingAnimationWidget.discreteCircle(
+        color: Colors.deepPurple,
+        size: 100,
+      ),
     );
   }
 
   Widget _buildImgItem(Product product) {
     return StaggeredGridTile.count(
-      crossAxisCellCount: 2,
-      mainAxisCellCount: 2,
+      crossAxisCellCount: isLandscape ? 1 : 2,
+      mainAxisCellCount: isLandscape ? 1 : 2,
       child: InkWell(
         child: Stack(
           children: [
             Positioned.fill(
-              child: FadeInImage.assetNetwork(
+              child: CachedNetworkImage(
+                alignment: Alignment.center,
+                imageUrl: product.imgUrl ?? '',
                 fit: BoxFit.cover,
-                image: product.imgUrl,
-                placeholder: 'assets/images/logo_gruchang_no_bg.png',
-                imageErrorBuilder: (context, error, stackTrace) {
+                placeholder: (context, url) {
+                  return Image.asset(
+                    'assets/images/logo_gruchang_no_bg.png',
+                    fit: BoxFit.cover,
+                  );
+                },
+                errorWidget: (context, url, error) {
                   return Image.asset(
                     'assets/images/logo_gruchang_no_bg.png',
                     fit: BoxFit.cover,
@@ -282,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                   height: 60,
                   child: Center(
                     child: Text(
-                      product.name,
+                      product.nameTH,
                       style: Theme.of(context).textTheme.large,
                     ),
                   ),

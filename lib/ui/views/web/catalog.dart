@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gruchang_thai_gold_smith/ui/shared/theme.dart';
 
+import '../../../core/sevices/model/product.dart';
 import '../../widgets/custom_footer.dart';
 import '../../widgets/custom_layout.dart';
 import 'home.dart';
@@ -49,7 +50,7 @@ class _CatalogPageState extends State<CatalogPage> {
       child: Column(
         children: [
           SizedBox(
-            height: 300,
+            height: 500,
             child: Row(
               children: [
                 Expanded(
@@ -78,9 +79,15 @@ class _CatalogPageState extends State<CatalogPage> {
   }
 
   Widget _buildHeaderImage() {
-    return Image.asset(
-      'assets/images/p1_1.png',
-      fit: BoxFit.cover,
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            'assets/images/p1_1.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ],
     );
   }
 
@@ -107,18 +114,18 @@ class _CatalogPageState extends State<CatalogPage> {
 
   Widget _buildContent() {
     List<Product> listImgs = [
-      Product(name: 'BA-101', imgUrl: 'https://drive.google.com/uc?export=view&id=11eEV4eJyhPxS044VO72m5QoVHT5d0rR6'),
-      Product(name: 'BA-102', imgUrl: 'https://drive.google.com/uc?export=view&id=1sLgylZNJSV2fYHbHxNIIO1TT97HuuRkx'),
-      Product(name: 'BA-103', imgUrl: 'https://drive.google.com/uc?export=view&id=1BkcEh_XpQ72YFwvFzd08jDDclHmKmaaL'),
-      Product(name: 'BA-104', imgUrl: 'https://drive.google.com/uc?export=view&id=1nRwSu91BgYRcPuEiOIBz7zQF_tKIh5H3'),
-      Product(name: 'BA-105', imgUrl: 'https://drive.google.com/uc?export=view&id=1hk2ffeVZcJ-u8VSdYfPs8g2tPfeX56Bo'),
-      Product(name: 'BA-106', imgUrl: 'https://drive.google.com/uc?export=view&id=1tMqNUdkKOXxbjp3J16oTgO7FPNXvK7Xw'),
-      Product(name: 'BA-107', imgUrl: 'https://drive.google.com/uc?export=view&id=11eEV4eJyhPxS044VO72m5QoVHT5d0rR6'),
-      Product(name: 'BA-108', imgUrl: 'https://drive.google.com/uc?export=view&id=1sLgylZNJSV2fYHbHxNIIO1TT97HuuRkx'),
-      Product(name: 'BA-109', imgUrl: 'https://drive.google.com/uc?export=view&id=1BkcEh_XpQ72YFwvFzd08jDDclHmKmaaL'),
-      Product(name: 'BA-110', imgUrl: 'https://drive.google.com/uc?export=view&id=1nRwSu91BgYRcPuEiOIBz7zQF_tKIh5H3'),
-      Product(name: 'BA-111', imgUrl: 'https://drive.google.com/uc?export=view&id=1hk2ffeVZcJ-u8VSdYfPs8g2tPfeX56Bo'),
-      Product(name: 'BA-112', imgUrl: 'https://drive.google.com/uc?export=view&id=1tMqNUdkKOXxbjp3J16oTgO7FPNXvK7Xw'),
+      Product(nameTH: 'BA-101', imgUrl: 'https://drive.google.com/uc?export=view&id=11eEV4eJyhPxS044VO72m5QoVHT5d0rR6'),
+      Product(nameTH: 'BA-102', imgUrl: 'https://drive.google.com/uc?export=view&id=1sLgylZNJSV2fYHbHxNIIO1TT97HuuRkx'),
+      Product(nameTH: 'BA-103', imgUrl: 'https://drive.google.com/uc?export=view&id=1BkcEh_XpQ72YFwvFzd08jDDclHmKmaaL'),
+      Product(nameTH: 'BA-104', imgUrl: 'https://drive.google.com/uc?export=view&id=1nRwSu91BgYRcPuEiOIBz7zQF_tKIh5H3'),
+      Product(nameTH: 'BA-105', imgUrl: 'https://drive.google.com/uc?export=view&id=1hk2ffeVZcJ-u8VSdYfPs8g2tPfeX56Bo'),
+      Product(nameTH: 'BA-106', imgUrl: 'https://drive.google.com/uc?export=view&id=1tMqNUdkKOXxbjp3J16oTgO7FPNXvK7Xw'),
+      Product(nameTH: 'BA-107', imgUrl: 'https://drive.google.com/uc?export=view&id=11eEV4eJyhPxS044VO72m5QoVHT5d0rR6'),
+      Product(nameTH: 'BA-108', imgUrl: 'https://drive.google.com/uc?export=view&id=1sLgylZNJSV2fYHbHxNIIO1TT97HuuRkx'),
+      Product(nameTH: 'BA-109', imgUrl: 'https://drive.google.com/uc?export=view&id=1BkcEh_XpQ72YFwvFzd08jDDclHmKmaaL'),
+      Product(nameTH: 'BA-110', imgUrl: 'https://drive.google.com/uc?export=view&id=1nRwSu91BgYRcPuEiOIBz7zQF_tKIh5H3'),
+      Product(nameTH: 'BA-111', imgUrl: 'https://drive.google.com/uc?export=view&id=1hk2ffeVZcJ-u8VSdYfPs8g2tPfeX56Bo'),
+      Product(nameTH: 'BA-112', imgUrl: 'https://drive.google.com/uc?export=view&id=1tMqNUdkKOXxbjp3J16oTgO7FPNXvK7Xw'),
     ];
 
     return Column(
@@ -172,7 +179,7 @@ class _CatalogPageState extends State<CatalogPage> {
                 height: 60,
                 child: Center(
                   child: Text(
-                    product.name,
+                    product.nameTH,
                     style: Theme.of(context).textTheme.large,
                   ),
                 ),

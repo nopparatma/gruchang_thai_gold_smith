@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:catcher/core/catcher.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gruchang_thai_gold_smith/ui/views/web/about_us.dart';
 import 'package:gruchang_thai_gold_smith/ui/views/web/contact_us.dart';
 import 'package:gruchang_thai_gold_smith/ui/views/web/home.dart';
@@ -12,6 +13,7 @@ import 'package:logger/logger.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 
+import '../core/bloc/product/product_bloc.dart';
 import '../ui/router.dart';
 import '../ui/shared/ui_config.dart';
 import '../ui/views/web/catalog.dart';
@@ -22,12 +24,19 @@ class MainAppLocalization extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlobalLoaderOverlay(
-      useDefaultLoading: false,
-      overlayOpacity: 0.5,
-      overlayColor: Colors.black,
-      overlayWidget: buildOverlayLoader(),
-      child: buildChild(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ProductBloc>(
+          create: (context) => ProductBloc(),
+        )
+      ],
+      child: GlobalLoaderOverlay(
+        useDefaultLoading: false,
+        overlayOpacity: 0.5,
+        overlayColor: Colors.black,
+        overlayWidget: buildOverlayLoader(),
+        child: buildChild(),
+      ),
     );
   }
 
